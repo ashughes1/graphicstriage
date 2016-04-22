@@ -69,15 +69,21 @@ function displayQueries()
     }
     var day = new Date();    
     day.setDate(day.getDate() + (query.day + (7-day.getDay())) % 7);
-    
     var index = (day-Date.now())%7;
+    var datestamp = new Date(day.getFullYear(),day.getMonth(),day.getDate(),10,00,00);
+  
+    var today = new Date();
+    if (today > datestamp) {
+      datestamp = new Date(datestamp.getTime() + 7 * 24 * 60 * 60 * 1000);
+      index = index + 7;
+    }
+    
     content[index] = '<div class="bugcount">'
                 + '<h3>' + query.name + '</h3>'
                 + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
                 + '<b>Next Session:</b> <br />'
-                + '<a href="' + query.wiki + '">' + day.toDateString() + '<br />10:00am Pacific</a>'
+                + '<a href="' + query.wiki + '">' + datestamp.toDateString() + '<br />10:00am Pacific</a>'
                 + '</div>';
-    //$("#reportDiv-" + i).replaceWith(content);
   }
   content = content.filter(function(value) {
     return value;
