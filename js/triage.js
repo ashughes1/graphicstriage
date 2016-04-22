@@ -138,6 +138,8 @@ function getBugCounts()
           this.bugQuery.count = data.bug_count;
           displayCount(this.index, this.bugQuery.count,
                        BUGZILLA_URL + this.bugQuery.url);
+          console.log(BUGZILLA_URL + this.bugQuery.url);
+          console.log(this.url);
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
