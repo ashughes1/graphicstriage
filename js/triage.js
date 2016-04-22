@@ -61,6 +61,7 @@ function displayQueries()
   if (!bugQueries) {
     return;
   }
+  var content = new Array();
   for (var i = 0; i < bugQueries.length; i++) {
     var query = bugQueries[i];
     if (!("url" in query)) {
@@ -68,13 +69,22 @@ function displayQueries()
     }
     var day = new Date();    
     day.setDate(day.getDate() + (query.day + (7-day.getDay())) % 7);
-    var content = '<div class="bugcount">'
+    
+    var index = (day-Date.now())%7;
+    content[index] = '<div class="bugcount">'
                 + '<h3>' + query.name + '</h3>'
                 + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
                 + '<b>Next Session:</b> <br />'
                 + '<a href="' + query.wiki + '">' + day.toDateString() + '<br />10:00am Pacific</a>'
                 + '</div>';
-    $("#reportDiv-" + i).replaceWith(content);
+    //$("#reportDiv-" + i).replaceWith(content);
+  }
+  content = content.filter(function(value) {
+    return value;
+  });
+  content.reverse();
+  for (var i = 0; i < content.length; i++) {
+    $("#reportDiv-" + i).replaceWith(content[i]);
   }
 }
 
