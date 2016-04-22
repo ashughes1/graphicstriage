@@ -66,15 +66,15 @@ function displayQueries()
     if (!("url" in query)) {
       continue;
     }
-    console.log(query.name);
     var day = new Date();    
     day.setDate(day.getDate() + (query.day + (7-day.getDay())) % 7);
-    $("#reportDiv-" + i).replaceWith("<div class=\"bugcount\"><h3>"
-                                  + query.name
-                                  + "</h3>"
-                                  + "<div id=\"data" + i + "\""
-                                  + " class=\"data greyedout\">?</div>"
-                                  + "<br /><br /><b>Next Session:</b> <br />" + day.toDateString() + "<br />10:00am Pacific</div>");
+    var content = '<div class="bugcount">'
+                + '<h3>' + query.name + '</h3>'
+                + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
+                + '<b>Next Session:</b> <br />'
+                + '<a href="' + query.wiki + '">' + day.toDateString() + '<br />10:00am Pacific</a>'
+                + '</div>';
+    $("#reportDiv-" + i).replaceWith(content);
   }
 }
 
