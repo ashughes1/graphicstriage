@@ -15,8 +15,43 @@
     <div id="title"><a href="https://wiki.mozilla.org/Platform/GFX/TriageSchedule#Schedule">Graphics</a></div>
     <div id="subtitle" class="subtitle">Daily Backlog Triage</div></div>
     <br />
-    <center><div id="content"><h2>No triage information available</h2></div></center>
-    <center><h5><a href="https://wiki.mozilla.org/QA/Platform/Graphics/Triage">Wiki</a> | <a href="https://github.com/ashughes1/graphicstriage">Code</a></h5></center>
-    <iframe src='https://ashughes1.github.io/graphicstriage-metrics' style="text-align: center; width:100%; height: 400px; border: none" />
+    <center>
+      <h5><a href="https://wiki.mozilla.org/QA/Platform/Graphics/Triage">Wiki</a> | <a href="https://github.com/ashughes1/graphicstriage">Code (Triage)</a> | <a href="https://github.com/ashughes1/graphicstriage-metrics">Code (Metrics)</a></h5>
+      <div id="content">
+        <h2>No triage information available</h2>
+      </div>
+    </center>
+    <center>
+      <iframe class='col-lg-6 text-center' src='https://ashughes1.github.io/graphicstriage-metrics#triage-metrics' scrolling="no" style="text-align:left; width:430px; height:300px; border:none"></iframe>    
+      <iframe class='col-lg-6 text-center' src='https://ashughes1.github.io/graphicstriage-metrics#wontfix-regressions' scrolling="no" style="text-align:right; width:430px; height:300px; border:none"></iframe>      
+    </center>
+    
+    
+    
+    <script>
+      var jqxhr = $.getJSON("https://crash-stats.mozilla.com/api/SuperSearch/?&signature=~compute_image_info&date=%3E%3D2015-04-29&date=%3C%3D2016-04-26&_histogram.date=release_channel&_histogram_interval=1d", function(data) {
+        console.log( "success" );
+        var items = [];
+        $.each(data, function(key, value) {
+          if (key == "facets") {
+            var histogram_date = value.histogram_date;
+            console.log(histogram_date);
+          }
+        });
+        
+      })
+        .done(function() {
+          console.log( "second success" );
+        })
+        .fail(function() {
+          console.log( "error" );
+        })
+        .always(function() {
+          console.log( "complete" );
+        });
+      
+      
+      
+    </script>
   </body>
 </html>
