@@ -62,28 +62,29 @@ function displayQueries()
     return;
   }
   var content = new Array();
+  
+  var nextDay = new Date();
+  nextDay.setDate(nextDay.getDate() + 1);
+  if (nextDay.getDay() == 6) nextDay.setDate(nextDay.getDate() + 2);
+  if (nextDay.getDay() == 0) nextDay.setDate(nextDay.getDate() + 1);
+
   for (var i = 0; i < bugQueries.length; i++) {
     var query = bugQueries[i];
     if (!("url" in query)) {
       continue;
     }
-    var day = new Date();    
-    day.setDate(day.getDate() + (query.day + (7-day.getDay())) % 7);
-    var index = (day-Date.now())%7;
-    var datestamp = new Date(day.getFullYear(),day.getMonth(),day.getDate(),10,00,00);
-  
-    var today = new Date();
-    if (today > datestamp) {
-      datestamp = new Date(datestamp.getTime() + 7 * 24 * 60 * 60 * 1000);
-      index = index + 7;
-    }
     
-    content[index] = '<div class="bugcount">'
+    var datestamp = new Date(nextDay.getFullYear(),nextDay.getMonth(),nextDay.getDate(),10,00,00);
+    content[query.day-1] = '<div class="bugcount">'
                 + '<h3>' + query.name + '</h3>'
                 + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
                 + '<b>Next Session:</b> <br />'
                 + '<a href="' + query.wiki + '">' + datestamp.toDateString() + '<br />10:00am Pacific</a>'
                 + '</div>';
+    
+    nextDay.setDate(nextDay.getDate() + 1);
+    if (nextDay.getDay() == 6) nextDay.setDate(nextDay.getDate() + 2);
+    if (nextDay.getDay() == 0) nextDay.setDate(nextDay.getDate() + 1);
   }
   content = content.filter(function(value) {
     return value;
