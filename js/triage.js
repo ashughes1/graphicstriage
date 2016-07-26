@@ -58,34 +58,53 @@ function displayTitle(count, displayType)
 
 function displayQueries()
 {
+  // Skip if there are no queries
   if (!bugQueries) {
     return;
   }
+    
   var content = new Array();
+  var next = new Date();
+  if (next.getDay() == 0) next.setDate(next.getDate() - 1);
+  if (next.getDay() == 6) next.setDate(next.getDate() - 1);
   
-  var nextDay = new Date();
-  nextDay.setDate(nextDay.getDate() + 1);
-  if (nextDay.getDay() == 6) nextDay.setDate(nextDay.getDate() + 2);
-  if (nextDay.getDay() == 0) nextDay.setDate(nextDay.getDate() + 1);
-
+  // Set the index order
+  for (var i = 0; i < bugQueries.length; i++) {
+    var index = bugQueries[i].day - next.getDay();
+    if (index < 0) index = index + 6;
+    bugQueries[i]["index"] = index;
+  }
+  
+  // Loop through each query to output the HTML
   for (var i = 0; i < bugQueries.length; i++) {
     var query = bugQueries[i];
+    for (var j=0; j < bugQueries.length; j++) {
+      if (query.index != i) query = bugQueries[j];
+    }
+    
     if (!("url" in query)) {
       continue;
     }
     
-    var datestamp = new Date(nextDay.getFullYear(),nextDay.getMonth(),nextDay.getDate(),10,00,00);
-    content[query.day-1] = '<div class="bugcount">'
-                + '<h3>' + query.name + '</h3>'
+    // Set the next date, skipping weekend days
+    next.setDate(next.getDate() + 1);
+    if (next.getDay() == 6 || next.getDay() == 0) {
+      next.setDate(next.getDate() + 2);
+    }
+    query["date"] = new Date(next.getFullYear(),next.getMonth(),next.getDate(),10,00,00);
+  }
+  
+  for (var i = 0; i < bugQueries.length; i++) {
+    // Set the datestamp and output the div for the query
+    content[bugQueries[i].index] = '<div class="bugcount">'
+                + '<h3>' + bugQueries[i].name + '</h3>'
                 + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
                 + '<b>Next Session:</b> <br />'
-                + '<a href="' + query.wiki + '">' + datestamp.toDateString() + '<br />10:00am Pacific</a>'
+                + '<a href="' + bugQueries[i].wiki + '">' + bugQueries[i].date.toDateString() + '<br />10:00am Pacific</a>'
                 + '</div>';
-    
-    nextDay.setDate(nextDay.getDate() + 1);
-    if (nextDay.getDay() == 6) nextDay.setDate(nextDay.getDate() + 2);
-    if (nextDay.getDay() == 0) nextDay.setDate(nextDay.getDate() + 1);
   }
+  
+  // Output the content
   content = content.filter(function(value) {
     return value;
   });
