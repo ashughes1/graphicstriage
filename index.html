@@ -33,33 +33,5 @@
       </tr>
     </table>
     </center>
-    
-    
-    
-    <script>
-      var jqxhr = $.getJSON("https://crash-stats.mozilla.com/api/SuperSearch/?&signature=~compute_image_info&date=%3E%3D2015-04-29&date=%3C%3D2016-04-26&_histogram.date=release_channel&_histogram_interval=1d", function(data) {
-        console.log( "success" );
-        var items = [];
-        $.each(data, function(key, value) {
-          if (key == "facets") {
-            var histogram_date = value.histogram_date;
-            console.log(histogram_date);
-          }
-        });
-        
-      })
-        .done(function() {
-          console.log( "second success" );
-        })
-        .fail(function() {
-          console.log( "error" );
-        })
-        .always(function() {
-          console.log( "complete" );
-        });
-      
-      
-      
-    </script>
   </body>
 </html>
