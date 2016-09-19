@@ -32,7 +32,9 @@
       "name":"Cold Regressions",
       "day":6,
       "wiki":"https://wiki.mozilla.org/QA/Platform/Graphics/Triage#Cold_Regressions",
-      "params":"&keywords=regression&keywords_type=anywords&o1=greaterthan&v1=42&f1=days_elapsed"}
+      "params":"&keywords=regression&keywords_type=anywords&o1=greaterthan&v1=42&f1=days_elapsed&f2=op_sys&o2=notsubstring&v2=Gonk&f3=keywords&o3=nowordssubstr&v3=assertion%2C%20intermittent"}
   ],
   "refreshHours": 12
 }
+
+
