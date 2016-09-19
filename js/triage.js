@@ -100,7 +100,8 @@ function displayQueries()
                 + '<h3>' + bugQueries[i].name + '</h3>'
                 + '<div id="data' + i + '" class="data greyedout">?</div><br /><br />'
                 + '<b>Next Session:</b> <br />'
-                + '<a href="' + bugQueries[i].wiki + '">' + bugQueries[i].date.toDateString() + '<br />10:00am Pacific</a>'
+                + '<a href="' + bugQueries[i].wiki + '">' + bugQueries[i].date.toDateString() + '<br />10:00am Pacific</a><br />'
+                + '<iframe src="https://ashughes1.github.io/graphicstriage-metrics/index.htm#metrics-' + bugQueries[i].metrics + '" scrolling="yes" style="text-align:left; width:220px; height:220px; border:none"></iframe>'
                 + '</div>';
   }
   
@@ -112,6 +113,12 @@ function displayQueries()
   for (var i = 0; i < content.length; i++) {
     $("#reportDiv-" + i).replaceWith(content[i]);
   }
+  
+  var footer = '<div style="padding-left:20%; width:100%">'
+    + '<iframe src="https://ashughes1.github.io/graphicstriage-metrics/index.htm#wontfix-regressions" scrolling="no" style="text-align:left; width:600px; height:300px; border:none"></iframe>'
+    + '<iframe src="https://ashughes1.github.io/graphicstriage-metrics/index.htm#wontfix-regressions-new" scrolling="no" style="text-align:left; width:600px; height:300px; border:none"></iframe>'
+    + '</div>';
+  $("#body").append(footer);
 }
 
 function displayYearFooter(currentYear, displayType)
